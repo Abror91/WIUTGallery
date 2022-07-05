@@ -1,0 +1,73 @@
+﻿@model DemoWIUTGallery.Models.ViewModels.FolderPhotoesViewModel  
+@{  
+    ViewData["Title"] = "Photoes List";  
+}  
+<div class="col-12">  
+    <div class="card card-primary">  
+        <div class="card-header">  
+            <div class="card-title">  
+                Gallery @Model.FolderName photoes
+            </div>  
+        </div>  
+        <div class="card-body">  
+  
+            <form id="frmPhototGraphy" class="form-horizontal" asp-action="AddPhotoes" asp-controller="Photoes" method="post" enctype="multipart/form-data">  
+                <div class="col-md-6 col-sm-6">  
+
+                     <input type="hidden" asp-for="FolderId" />
+                     <input type="hidden" asp-for="FolderName" />
+  
+                    <div class="form-group row">  
+                        <label class="col-sm-2 col-form-label">Photo</label>  
+  
+                        <div class="col-sm-6 custom-file">  
+  
+                            <input asp-for="@Model.AddedFiles" type="file" class="custom-file-input" multiple="multiple">  
+                            <label class="custom-file-label" for="@Model.AddedFiles">Choose file</label>  
+                            <span asp-validation-for="@Model.AddedFiles" class="text-danger"></span>  
+  
+                        </div>  
+                        <div class="col-sm-4"> <button type="submit" class="btn btn-danger">Upload All</button></div>  
+                    </div>  
+  
+  
+  
+                </div>  
+            </form>  
+            <br />  
+            <div class="row">  
+                @if (Model.Photoes != null)  
+                {  
+                    foreach (var item in Model.Photoes)  
+                    {  
+                        <div class="col-sm-2">  
+                            <a href="@Url.Content("~/photography/"+item.Name)" data-toggle="lightbox" data-title="sample 1 - white" data-gallery="gallery">  
+                                <img src="~/photography/@item.Name" asp-append-version="true" class="img-fluid mb-2" alt="white sample">  
+                            </a>  
+                            <a href="@Url.Action("Delete","Photoes",new { photoId=item.Id, path = item.Path, folderId = Model.FolderId, folderName = Model.FolderName })" style="float:right">Delete</a>  
+                        </div>  
+                    }  
+  
+                }  
+  
+            </div>  
+        </div>  
+    </div>  
+</div>  
+  
+@section Scripts{  
+  
+    <script>  
+        
+        $(function () {  
+            $(document).on('click', '[data-toggle="lightbox"]', function (event) {  
+                event.preventDefault();  
+                $(this).ekkoLightbox({  
+                    alwaysShowClose: true  
+                });  
+            });  
+        });  
+  
+  
+    </script>  
+} 

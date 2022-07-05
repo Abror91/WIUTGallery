@@ -1,0 +1,46 @@
+﻿@model IEnumerable<DemoWIUTGallery.Models.ViewModels.FolderViewModel>
+
+@{
+    ViewData["Title"] = "Folders List";
+}
+
+<h1>All Folders</h1>
+
+<p>
+    <a asp-action="AddOrEdit">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th width="20px">
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td width="20px">
+                <i class="fa-solid fa-folder fa-2x" style="color:#ffc40c"></i>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Go to Gallery", "Index", "Photoes", new {  folderId=item.Id, folderName = item.Name  }) |
+                @Html.ActionLink("Edit", "AddOrEdit", new { id=item.Id  }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
